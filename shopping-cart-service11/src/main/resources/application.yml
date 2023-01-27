@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: shopping-cart-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=shopping_cart
+    username: postgres
+    password: admin
+  jpa:
+    database: postgresql
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+
+  liquibase:
+    default-schema: shopping_cart
+    liquibase-schema: shopping_cart
+    enabled: true
+    user: postgres
+    password: admin
+    change-log: classpath:db/changelog/v1.0/changelog-v1.0.xml
+  kafka:
+    consumer:
+      group-id: app.2

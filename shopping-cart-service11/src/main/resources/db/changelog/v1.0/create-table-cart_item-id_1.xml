@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <preConditions>
+        <dbms type="postgresql"/>
+    </preConditions>
+
+    <changeSet id="1" author="viktor_aleinikov/sergey_balyuk">
+
+        <!--        Прописываем создание схемы postgres(если ее нет) через sql запрос-->
+        <sql dbms="postgresql">
+            CREATE SCHEMA IF NOT EXISTS shopping_cart;
+        </sql>
+
+        <!--        Прописываем создание таблицы Cart_item-->
+
+        <createTable tableName="cart_item">
+            <column autoIncrement="true" name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+
+            <!--        Создаем поля-->
+
+            <column name="item_id" type="uuid">
+                <constraints nullable="false" foreignKeyName="item_id"/>
+<!--                             ????  или / foreignKeyName="id" (имеется ввиду id из Catalog)  ????-->
+            </column>
+            <column name="profile_id" type="uuid">
+                <constraints nullable="false" foreignKeyName="profile_id"/>
+<!--                             ????  или / foreignKeyName="id" (имеется ввиду id из Profile)  ????-->
+            </column>
+            <column name="count" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_discounted" type="boolean">
+            </column>
+            <column name="discount_price" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <!--        Роллбэк на удаление таблицы-->
+
+        <rollback>
+            <dropTable tableName="Cart_item"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
