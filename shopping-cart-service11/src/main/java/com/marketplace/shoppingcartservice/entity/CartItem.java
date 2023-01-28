@@ -58,7 +58,5 @@ public class CartItem {
     @Column(name = "discount_price")
     private Long discountPrice;
 
-
-
 }
 

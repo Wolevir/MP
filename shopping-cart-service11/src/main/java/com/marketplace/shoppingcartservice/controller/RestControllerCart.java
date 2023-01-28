@@ -1,6 +1,7 @@
 package com.marketplace.shoppingcartservice.controller;
 
 import com.marketplace.shoppingcartservice.entity.CartItem;
+import com.marketplace.shoppingcartservice.entity.Profile;
 import com.marketplace.shoppingcartservice.services.CartItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,12 +18,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RestControllerCart {
 
-    private final KafkaTemplate kafkaTemplate;
     private final CartItemService cartItemService;
 
     @PostMapping("/order/{id}")
-    public ResponseEntity<List<CartItem>> orderList( @PathVariable UUID id) {
-        kafkaTemplate.send("orders_cart", cartItemService.getListProducts(id).toString());
+    public ResponseEntity<List<CartItem>> orderList(@PathVariable UUID id) {
+        cartItemService.getOrderList(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

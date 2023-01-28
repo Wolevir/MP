@@ -21,6 +21,4 @@ spring:
     user: postgres
     password: admin
     change-log: classpath:db/changelog/v1.0/changelog-v1.0.xml
-  kafka:
-    consumer:
-      group-id: app.2
+
